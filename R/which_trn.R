@@ -48,6 +48,7 @@ which_trn <- function(x, collapse = ";", clean = TRUE) {
 
     if (collapse != "none") {
       trn <- trn |>
+        unique() |>
         dplyr::na_if("NA") |>
         dplyr::na_if("") |>
         stats::na.omit() |>

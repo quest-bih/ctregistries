@@ -21,8 +21,8 @@
 # UMIN-CTR
 
 
+context("ClinicalTrials.gov")
 # ClinicalTrials.gov ------------------------------------------------------
-
 test_that("ClinicalTrials.gov TP detected", {
 
   tests <- c(
@@ -66,6 +66,7 @@ test_that("ClinicalTrials.gov TN rejected", {
   )
 })
 
+context("DRKS")
 # DRKS --------------------------------------------------------------------
 
 test_that("DRKS TP detected", {
@@ -111,13 +112,19 @@ test_that("DRKS TN rejected", {
   )
 })
 
+context("EudraCT")
 # EudraCT -----------------------------------------------------------------
 test_that("EudraCT TP detected", {
 
   tests <- c(
     "EudraCT 2004-002714-11",
     "2020-001934-37-ES"
+
   )
+
+  # expect_equal(which_trns(tests),
+  #              c(
+  #              ))
 
   purrr::walk(
     tests,
@@ -138,7 +145,7 @@ test_that("EudraCT TN rejected", {
   )
 })
 
-
+context("IRCT")
 # IRCT --------------------------------------------------------------------
 
 test_that("IRCT TP detected", {
@@ -166,7 +173,7 @@ test_that("IRCT TN rejected", {
 })
 
 
-
+context("ISRCTN")
 # ISRCTN ------------------------------------------------------------------
 
 test_that("ISRCTN TP detected", {
@@ -193,6 +200,7 @@ test_that("ISRCTN TN rejected", {
   )
 })
 
+context("NTR")
 # NTR ---------------------------------------------------------------------
 
 test_that("NTR TP detected", {
@@ -249,7 +257,7 @@ test_that("NTR TN rejected", {
   )
 })
 
-
+context("PACTR")
 # PACTR -------------------------------------------------------------------
 
 test_that("PACTR TP detected", {
@@ -282,8 +290,8 @@ test_that("All PACTR digits extracted", {
 
 })
 
+context("REPEC")
 # REPEC -------------------------------------------------------------------
-
 test_that("REPEC TP detected", {
 
   tests <- c(
@@ -311,9 +319,8 @@ test_that("REPEC TN rejected", {
   )
 })
 
-
+context("UMIN-CTR")
 # UMIN-CTR ----------------------------------------------------------------
-
 test_that("UMIN-CTR TP detected", {
 
   tests <- c(
@@ -337,3 +344,13 @@ test_that("UMIN-CTR TN rejected", {
     expect_registry, reg = "UMIN-CTR", match_expected = FALSE
   )
 })
+
+
+context("output consistency which_trn")
+
+test_that("collapse deduplication", {
+  expect_equal(which_trn(c("NCT02529358", NA, "Nct02529358", "NA",
+                           "NCT 02529358", "", "NCT#02529358")),
+                         "NCT02529358")
+})
+
