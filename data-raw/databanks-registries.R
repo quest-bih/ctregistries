@@ -1,4 +1,4 @@
-databanks <- readr::read_csv(here("inst", "extdata", "registries.csv"))
+databanks <- readr::read_csv(here::here("inst", "extdata", "registries.csv"))
 
 databanks <-
   databanks |>

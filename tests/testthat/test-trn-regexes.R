@@ -118,13 +118,22 @@ test_that("EudraCT TP detected", {
 
   tests <- c(
     "EudraCT 2004-002714-11",
-    "2020-001934-37-ES"
+    "2020-001934-37-ES",
+    "EUDRACT2013-004-787-62", # from CT.gov
+    "2007-003060-22EUDRACTNumber", # from CT.gov
+    "Name: EudraCT Number Number: 2016-004-215-13" # from EUCTR
+)
 
-  )
-
-  # expect_equal(which_trns(tests),
-  #              c(
-  #              ))
+  # stringr::str_view(tests, registries |> filter(registry == "EudraCT") |> pull(trn_regex))
+  #
+  # stringr::str_view(tests, "(?i)(?<!IRCT|PACTR|\\d)20\\d{2}\\W*0\\d{2}\\W*\\d{3}\\W*\\d{2}(\\b|(?=E(U|u)))")
+  expect_equal(which_trns(tests),
+               c("2004-002714-11",
+                 "2020-001934-37",
+                 "2013-004787-62",
+                 "2007-003060-22",
+                 "2016-004215-13"
+               ))
 
   purrr::walk(
     tests,
@@ -136,6 +145,7 @@ test_that("EudraCT TN rejected", {
   tests <- c(
     # "200400600800", #10.1007/s00394-015-1084-x [ISSUE]
     # "201201801201"  #10.1016/j.jpain.2012.01.003 [ISSUE]
+    "Name: EU Trial Number Number: 2022-502482-17-00", # CTIS replaced EudraCT
     "PACTR201205000384379" #PMC5278894 (previously matched because of second "20")
   )
 
