@@ -4,10 +4,12 @@
 \alias{which_trns}
 \title{Extract TRN(s) from each element of input}
 \usage{
-which_trns(trn_vec, collapse = ";", clean = TRUE)
+which_trns(trn_vec, registry = NULL, collapse = ";", clean = TRUE)
 }
 \arguments{
 \item{trn_vec}{A character vector.}
+
+\item{registry}{Character. Registry of TRN. Default to NULL for all registries.}
 
 \item{collapse}{A string. If one of the vector elements has multiple TRNS
 the element of the output vector will be collapsed to a single
@@ -39,8 +41,10 @@ which_trns(c("NCT 00312962 and euctr2020-001808-41", "hello", "euctr2020-001808-
  clean = FALSE)
 # character(0) and NULL in input vector are omitted
 # convert NULL values to NAs when importing e.g. with `readr` to preserve
-messy_input <- c("", NULL, "Nct02529358", NA, "EudraCT 2004-002714-11", character(0), "NA")
+messy_input <- c("", NULL, "Nct02529358 and 2020-001934-37-ES", NA,
+"EudraCT 2004-002714-11", character(0), "NA")
 which_trns(messy_input)
+which_trns(messy_input, registry = "EudraCT")
 # compare to which_trn:
 which_trn(messy_input)
 }

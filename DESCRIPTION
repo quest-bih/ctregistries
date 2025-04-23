@@ -25,7 +25,8 @@ Imports:
     purrr,
     stringr,
     glue,
-    furrr
+    furrr,
+    tibble
 Depends: 
     R (>= 3.5)
 RoxygenNote: 7.3.2
