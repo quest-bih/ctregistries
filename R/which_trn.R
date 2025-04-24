@@ -110,5 +110,10 @@ which_trn <- function(x, registry = NULL, collapse = ";", clean = TRUE) {
 #' which_trn(messy_input)
 which_trns <- function(trn_vec, registry = NULL, collapse = ";", clean = TRUE) {
   stopifnot("Collapse argument cannot be set to 'none'. Did you mean to use which_trn?" = collapse != "none")
-  furrr::future_map_chr(trn_vec, \(x) which_trn(x, registry = registry, collapse = collapse, clean = clean), .progress = TRUE)
+  p <- progressr::progressor(along = trn_vec)
+
+  furrr::future_map_chr(trn_vec, \(x) {
+    p()
+    which_trn(x, registry = registry, collapse = collapse, clean = clean)
+  })
 }
