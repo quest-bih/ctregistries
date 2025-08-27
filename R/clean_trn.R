@@ -43,8 +43,8 @@ clean_trn <- function(trn, registry = NULL, quiet = FALSE){
   if (rlang::is_null(registry)){
 
     registry <-
-      ctregistries::registries %>%
-      dplyr::filter(stringr::str_detect(trn, .data$trn_regex)) %>%
+      ctregistries::registries |>
+      dplyr::filter(stringr::str_detect(trn, .data$trn_regex)) |>
       dplyr::pull(registry)
 
     # Return NA if no trn match
@@ -100,10 +100,10 @@ clean_trn <- function(trn, registry = NULL, quiet = FALSE){
       stringr::str_replace_all(
         stringr::str_extract(
           trn,
-          "20\\d{2}\\W*0\\d{5}\\W*\\d{2}"
+          "20\\d{2}\\W*0\\d{2}\\W*\\d{3}\\W*\\d{2}"
         ),
-        "(20\\d{2})\\W*(0\\d{5})\\W*(\\d{2})",
-        "\\1-\\2-\\3"
+        "(20\\d{2})\\W*(0\\d{2})\\W*(\\d{3})\\W*(\\d{2})",
+        "\\1-\\2\\3-\\4"
       ) ,
     trn
   )

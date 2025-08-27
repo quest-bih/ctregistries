@@ -21,8 +21,8 @@
 # UMIN-CTR
 
 
+context("ClinicalTrials.gov")
 # ClinicalTrials.gov ------------------------------------------------------
-
 test_that("ClinicalTrials.gov TP detected", {
 
   tests <- c(
@@ -30,8 +30,24 @@ test_that("ClinicalTrials.gov TP detected", {
     "NCT 00902941", #10.1002/mds.25661
     "nCt01208194",  #10.1007/s00432-014-1682-7
     "NCT#00379470", #10.1016/j.ejca.2012.04.011
-    "Nct02529358"   #10.1016/j.jad.2017.10.047
+    "Nct02529358",   #10.1016/j.jad.2017.10.047
+    "Name: NCT Number: 03849118", # from EUCTR
+    "NCT01882777_2", # CT.gov
+    "Name: NCT Number: NT 03096834" # from EUCTR
+    # from EUCTR but seems to have been corrected there:
+    # "Name: ClinicalTrials.gov  Number: NCTO2950051"
   )
+
+  expect_equal(which_trns(tests),
+               c("NCT01400022",
+                 "NCT00902941",
+                 "NCT01208194",
+                 "NCT00379470",
+                 "NCT02529358",
+                 "NCT03849118",
+                 "NCT01882777",
+                 "NCT03096834"))
+
 
   purrr::walk(
     tests,
@@ -39,25 +55,45 @@ test_that("ClinicalTrials.gov TP detected", {
   )
 })
 
-# test_that("ClinicalTrials.gov TN rejected", {
-#   tests <- c(
-#
-#   )
-#
-#   purrr::walk(
-#     tests,
-#     expect_registry, reg = "ClinicalTrials.gov", match_expected = FALSE
-#   )
-# })
+test_that("ClinicalTrials.gov TN rejected", {
+  tests <- c(
+    "NCT12345678"
+  )
 
+  purrr::walk(
+    tests,
+    expect_registry, reg = "ClinicalTrials.gov", match_expected = FALSE
+  )
+})
+
+context("DRKS")
 # DRKS --------------------------------------------------------------------
 
 test_that("DRKS TP detected", {
 
   tests <- c(
     "DRKS00005115", #10.1002/dta.1830
-    "DRKS 00003170" #10.1111/jdv.12823
+    "DRKS 00003170", #10.1111/jdv.12823
+    "DRKS Number: 00003246", # from EUCTR
+    "DRKS: 00004353", # from EUCTR
+    "DRKS-Number: DRKS00003349", # from EUCTR
+    "DRKS No Number: 00013730", # from EUCTR
+    "Name: DRKS Number: 00011932", # from EUCTR
+    "DRKS-IDDRKS00025222", # from DRKS
+    "DRKS ID 00003498" # from CT.gov
   )
+
+  expect_equal(which_trns(tests),
+               c("DRKS00005115",
+                 "DRKS00003170",
+                 "DRKS00003246",
+                 "DRKS00004353",
+                 "DRKS00003349",
+                 "DRKS00013730",
+                 "DRKS00011932",
+                 "DRKS00025222",
+                 "DRKS00003498"
+                 ))
 
   purrr::walk(
     tests,
@@ -65,24 +101,39 @@ test_that("DRKS TP detected", {
   )
 })
 
-# test_that("DRKS TN rejected", {
-#   tests <- c(
-#
-#   )
-#
-#   purrr::walk(
-#     tests,
-#     expect_registry, reg = "DRKS", match_expected = FALSE
-#   )
-# })
+test_that("DRKS TN rejected", {
+  tests <- c(
+    "DRKS 12345678"
+  )
 
+  purrr::walk(
+    tests,
+    expect_registry, reg = "DRKS", match_expected = FALSE
+  )
+})
+
+context("EudraCT")
 # EudraCT -----------------------------------------------------------------
 test_that("EudraCT TP detected", {
 
   tests <- c(
     "EudraCT 2004-002714-11",
-    "2020-001934-37-ES"
-  )
+    "2020-001934-37-ES",
+    "EUDRACT2013-004-787-62", # from CT.gov
+    "2007-003060-22EUDRACTNumber", # from CT.gov
+    "Name: EudraCT Number Number: 2016-004-215-13" # from EUCTR
+)
+
+  # stringr::str_view(tests, registries |> filter(registry == "EudraCT") |> pull(trn_regex))
+  #
+  # stringr::str_view(tests, "(?i)(?<!IRCT|PACTR|\\d)20\\d{2}\\W*0\\d{2}\\W*\\d{3}\\W*\\d{2}(\\b|(?=E(U|u)))")
+  expect_equal(which_trns(tests),
+               c("2004-002714-11",
+                 "2020-001934-37",
+                 "2013-004787-62",
+                 "2007-003060-22",
+                 "2016-004215-13"
+               ))
 
   purrr::walk(
     tests,
@@ -94,6 +145,7 @@ test_that("EudraCT TN rejected", {
   tests <- c(
     # "200400600800", #10.1007/s00394-015-1084-x [ISSUE]
     # "201201801201"  #10.1016/j.jpain.2012.01.003 [ISSUE]
+    "Name: EU Trial Number Number: 2022-502482-17-00", # This is a CTIS TRN, not EudraCT
     "PACTR201205000384379" #PMC5278894 (previously matched because of second "20")
   )
 
@@ -103,7 +155,7 @@ test_that("EudraCT TN rejected", {
   )
 })
 
-
+context("IRCT")
 # IRCT --------------------------------------------------------------------
 
 test_that("IRCT TP detected", {
@@ -131,7 +183,7 @@ test_that("IRCT TN rejected", {
 })
 
 
-
+context("ISRCTN")
 # ISRCTN ------------------------------------------------------------------
 
 test_that("ISRCTN TP detected", {
@@ -158,13 +210,33 @@ test_that("ISRCTN TN rejected", {
   )
 })
 
+context("NTR")
 # NTR ---------------------------------------------------------------------
 
 test_that("NTR TP detected", {
 
   tests <- c(
-    "NL9229"
+    "NL9229",
+    "DutchTrialRegister:NL8152", # from EUCTR
+    "DutchTrialRegister(LTR):NL5458", # from EUCTR
+    "NederlandTrilaRegister:NTR4269", # from EUCTR
+    "NationalTrialregistration:NTR3912", # from EUCTR
+    "NederlandsTrialregister:NL3011", # from EUCTR
+    "NederlandsTrailRegister:NL4187/NTR4337", # from EUCTR
+    "EffectofDelmopinolontreatmentofinflammation:NL5159", # from EUCTR
+    "NederlandTrilaRegister:NTR4269"
   )
+
+  expect_equal(which_trns(tests),
+               c("NL9229",
+                 "NL8152",
+                 "NL5458",
+                 "NTR4269",
+                 "NTR3912",
+                 "NL3011",
+                 "NL4187;NTR4337",
+                 "NL5159",
+                 "NTR4269"))
 
   purrr::walk(
     tests,
@@ -174,6 +246,7 @@ test_that("NTR TP detected", {
 
 test_that("NTR TN rejected", {
   tests <- c(
+    "CCMOdossiernumber:NL41789.078.13", # from EUCTR
     "nl-2012-302759", #10.1136/gutjnl-2012-302759
     # "nL6118",         #10.1097/TP.0000000000000779 [ISSUE]
     # "nl11",           #10.1186/cc13089 [ISSUE]
@@ -194,7 +267,7 @@ test_that("NTR TN rejected", {
   )
 })
 
-
+context("PACTR")
 # PACTR -------------------------------------------------------------------
 
 test_that("PACTR TP detected", {
@@ -221,12 +294,14 @@ test_that("PACTR TP detected", {
 # })
 
 test_that("All PACTR digits extracted", {
-  expect_equal(which_trn("PACTR 2010020001429343"), "PACTR 2010020001429343")
   expect_equal(which_trn("PACTR202406532417953"), "PACTR202406532417953")
+  expect_equal(which_trn("PACTR 2010020001429343", clean = FALSE), "PACTR 2010020001429343")
+  expect_equal(which_trn("PACTR 2010020001429343", clean = TRUE), "PACTR2010020001429343")
+
 })
 
+context("REPEC")
 # REPEC -------------------------------------------------------------------
-
 test_that("REPEC TP detected", {
 
   tests <- c(
@@ -254,9 +329,8 @@ test_that("REPEC TN rejected", {
   )
 })
 
-
+context("UMIN-CTR")
 # UMIN-CTR ----------------------------------------------------------------
-
 test_that("UMIN-CTR TP detected", {
 
   tests <- c(
@@ -280,3 +354,13 @@ test_that("UMIN-CTR TN rejected", {
     expect_registry, reg = "UMIN-CTR", match_expected = FALSE
   )
 })
+
+
+context("output consistency which_trn")
+
+test_that("collapse deduplication", {
+  expect_equal(which_trn(c("NCT02529358", NA, "Nct02529358", "NA",
+                           "NCT 02529358", "", "NCT#02529358")),
+                         "NCT02529358")
+})
+
