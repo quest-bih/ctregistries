@@ -5,8 +5,6 @@
 
 [![DOI](https://zenodo.org/badge/960506984.svg)](https://doi.org/10.5281/zenodo.16949291)
 
-### *Moved to <https://github.com/quest-bih/ctregistries> and archived as [v1.0.1](https://github.com/quest-bih/ctregistries/releases/tag/v1.0.1)*
-
 # ctregistries
 
 The goal of ctregistries is to facilitate the detection and analysis of
@@ -29,7 +27,7 @@ You can install the development version of ctregistries from GitHub:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("maia-sh/ctregistries")
+devtools::install_github("quest-bih/ctregistries")
 ```
 
 ## Dataset
