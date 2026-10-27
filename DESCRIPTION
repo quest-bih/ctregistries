@@ -1,17 +1,19 @@
 Package: ctregistries
 Type: Package
 Title: Data Package and R Functions for Clinical Trial Registries and other MEDLINE Databanks
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
-    person("Maia", "Salholz-Hillel", email = "jane@example.com", 
+    person("Maia", "Salholz-Hillel",
             role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-1934-9504")),
     person("Nicholas", "DeVito", 
             role = "dtc", comment = c(ORCID = "0000-0001-8286-1995")),
     person("Benjamin Gregory", "Carlisle", 
-            role = "dtc", comment = c(ORCID = "0000-0001-8975-0649"))
+            role = "dtc", comment = c(ORCID = "0000-0001-8975-0649")),
+    person("Vladislav", "Nachev", email = "vladislav.nachev@bih-charite.de"
+            role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0521-6153"))        
     )
-URL: https://github.com/maia-sh/ctregistries
-BugReports: https://github.com/maia-sh/ctregistries/issues
+URL: https://codeberg.org/quest-bih/ctregistries
+BugReports: https://codeberg.org/quest-bih/ctregistries/issues
 Description: Regular expressions (regex) and R functions for trial registration numbers (TRN) from World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) Primary Registries (https://www.who.int/ictrp/network/primary/en/) and MEDLINE Databank Sources (https://www.nlm.nih.gov/bsd/medline_databank_source.html).
     Additional, non-trial databanks indexed by MEDLINE included without regexes.
 License: CC BY 4.0
@@ -30,8 +32,8 @@ Imports:
     progressr
 Depends: 
     R (>= 3.5)
-RoxygenNote: 7.3.2
 Suggests: 
     testthat,
     here,
     readr
+Config/roxygen2/version: 8.1.1
