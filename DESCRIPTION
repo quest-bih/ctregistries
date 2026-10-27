@@ -4,12 +4,12 @@ Title: Data Package and R Functions for Clinical Trial Registries and other MEDL
 Version: 0.2.0
 Authors@R: c(
     person("Maia", "Salholz-Hillel",
-            role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-1934-9504")),
+            role = c("aut", "cph"), comment = c(ORCID = "0000-0003-1934-9504")),
     person("Nicholas", "DeVito", 
             role = "dtc", comment = c(ORCID = "0000-0001-8286-1995")),
     person("Benjamin Gregory", "Carlisle", 
             role = "dtc", comment = c(ORCID = "0000-0001-8975-0649")),
-    person("Vladislav", "Nachev", email = "vladislav.nachev@bih-charite.de"
+    person("Vladislav", "Nachev", email = "vladislav.nachev@bih-charite.de",
             role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0521-6153"))        
     )
 URL: https://codeberg.org/quest-bih/ctregistries
